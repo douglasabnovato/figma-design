@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finanças · Saques — protótipo AmploPay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <svg width="20" height="14" viewBox="0 0 20 14"><path d="M0 0l10 12L20 0h-4l-6 7-6-7z" fill="currentColor"/></svg>
+        <span>AmploPay</span>
+      </div>
+      <p class="side-label">Gerenciamento</p>
+      <nav class="menu">
+        <a class="menu-item" data-nav="Dashboard"><i data-i="grid"></i><span>Dashboard</span></a>
+        <button class="menu-item" id="toggleRelatorios" aria-expanded="true"><i data-i="chart"></i><span>Relatórios</span><i data-i="chevD" class="chev"></i></button>
+        <div class="submenu" id="submenuRelatorios">
+          <a class="sub-item" data-nav="Entradas via Pix">Entradas via Pix</a>
+          <a class="sub-item" data-nav="Saques">Saques</a>
+          <a class="sub-item" data-nav="Todas as transações">Todas as transações</a>
+        </div>
+        <a class="menu-item" data-nav="Disputas"><i data-i="file"></i><span>Disputas</span></a>
+        <a class="menu-item active"><i data-i="wallet"></i><span>Finanças</span></a>
+        <a class="menu-item" data-nav="Checkout"><i data-i="cart"></i><span>Checkout</span><i data-i="chevR" class="chev"></i></a>
+        <a class="menu-item" data-nav="Webhooks"><i data-i="hook"></i><span>Webhooks</span></a>
+        <a class="menu-item" data-nav="Integrações"><i data-i="link"></i><span>Integrações</span></a>
+        <a class="menu-item" data-nav="Taxas"><i data-i="pct"></i><span>Taxas</span></a>
+        <a class="menu-item" data-nav="Indique e ganhe"><i data-i="gift"></i><span>Indique e ganhe</span></a>
+        <a class="menu-item" data-nav="API"><i data-i="code"></i><span>API</span><i data-i="chevR" class="chev"></i></a>
+      </nav>
+      <div class="user">
+        <span class="avatar">LE</span>
+        <div><strong>Loja Exemplo</strong><small>financeiro@lojaexemplo.com</small></div>
+        <i data-i="chevUD" class="chev"></i>
+      </div>
+    </aside>
+
+    <div class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <button class="icon-btn" id="toggleSidebar" title="Recolher menu"><i data-i="panel"></i></button>
+        <span class="vsep"></span>
+        <nav class="crumbs"><a data-nav="Visão geral">Visão geral</a><i data-i="chevR"></i><strong>Finanças</strong></nav>
+        <div class="top-right">
+          <button class="icon-btn" id="toggleTheme" title="Alternar tema"><i data-i="sun"></i></button>
+          <div class="goal" title="Meta de faturamento: R$ 609 mil de R$ 1 milhão">
+            <span>🏆 R$ 609K / 1M</span><div class="goal-bar"><div style="width:61%"></div></div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <h1>Finanças</h1>
+        <p class="muted">Saldo de cada moeda e o histórico de saques, transferências, conversões e ajustes.</p>
+
+        <div class="banner warn" id="bannerBloqueio">
+          <i data-i="warn"></i>
+          <p><strong>Parte do seu saldo está bloqueada</strong> — <span id="bannerValor"></span> em BRL. Valor bloqueado entra no total, mas não pode ser sacado, convertido ou transferido, e não é liberado automaticamente. <a href="#card-BRL" id="verDetalhe">Veja o detalhe no card da moeda.</a></p>
+        </div>
+
+        <section>
+          <div class="section-head">
+            <div>
+              <h2>Saldos por moeda</h2>
+              <p class="muted small">Cada moeda tem saldo próprio. Os valores não se somam e não são convertidos automaticamente entre si.</p>
+            </div>
+            <button class="icon-btn" id="toggleValores" title="Ocultar valores"><i data-i="eye"></i></button>
+          </div>
+          <div class="cards" id="cards"></div>
+        </section>
+
+        <section>
+          <h2>Movimentações</h2>
+          <div class="tabs" role="tablist" id="tabs">
+            <button role="tab" data-tab="saques">Saques <span class="count" id="countSaques"></span></button>
+            <button role="tab" data-tab="transferencias">Transferências internas</button>
+            <button role="tab" data-tab="conversoes">Conversões <span class="count">0</span></button>
+            <button role="tab" data-tab="ajustes">Ajustes de saldo <span class="count">0</span></button>
+          </div>
+
+          <div class="panel" id="panelSaques">
+            <div class="panel-head">
+              <h3>Saques e transferências</h3>
+              <p class="muted small">Consulte o destino, as taxas e a confirmação de cada pagamento.</p>
+            </div>
+            <div class="filters">
+              <label class="search"><i data-i="search"></i><input id="fBusca" placeholder="ID, referência, recebedor ou chave"></label>
+              <select id="fOrigem"><option value="">Todas as origens</option><option>Transferência via API</option><option>Saque pelo painel</option></select>
+              <select id="fStatus"><option value="">Todos os status</option><option>Pago</option><option>Processando</option><option>Recusado</option></select>
+              <select id="fPeriodo"><option value="">Todo o período</option><option value="0">Hoje</option><option value="7">Últimos 7 dias</option><option value="30">Últimos 30 dias</option></select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Solicitação</th><th>Origem</th><th>Recebedor / destino</th><th>Valor</th><th>Taxa</th><th>Total debitado</th><th>Data</th><th>Status</th><th></th></tr></thead>
+                <tbody id="tbody"></tbody>
+              </table>
+            </div>
+            <div class="pager"><span class="muted small" id="pagerInfo"></span><div id="pagerBtns"></div></div>
+          </div>
+
+          <div class="panel empty" id="panelVazio" hidden>
+            <div class="empty-box"><i data-i="file"></i><strong id="vazioTitulo"></strong><p class="muted small" id="vazioTexto"></p></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Drawer de detalhe -->
+  <div class="overlay" id="overlay" hidden></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head"><h3>Detalhe do saque</h3><button class="icon-btn" data-close>✕</button></div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </aside>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" hidden role="dialog" aria-modal="true">
+    <form class="modal-box" id="modalForm">
+      <div class="modal-head"><h3 id="modalTitle"></h3><button type="button" class="icon-btn" data-close>✕</button></div>
+      <div id="modalBody"></div>
+      <div class="modal-foot" id="modalFoot"></div>
+    </form>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <div class="proto-tag">Protótipo · dados fictícios</div>
+  <script src="app.js"></script>
+</body>
+</html>
