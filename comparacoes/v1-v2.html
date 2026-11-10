@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparação v1 × v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #f4f4f5; --card: #fff; --text: #18181b; --muted: #71717a; --border: #e4e4e7; --accent: #18181b; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0c0c0e; --card: #151518; --text: #f4f4f5; --muted: #a1a1aa; --border: #27272a; --accent: #f4f4f5; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.5 Inter, "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); }
+  header { padding: 20px 24px 0; max-width: 1480px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .muted { color: var(--muted); margin: 0; }
+  nav.telas, nav.modos { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
+  nav a, nav button { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); color: var(--text); text-decoration: none; cursor: pointer; }
+  nav [aria-current="true"], nav [aria-pressed="true"] { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  main { max-width: 1480px; margin: 16px auto 48px; padding: 0 24px; }
+  .stage { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; overflow: hidden; }
+  .slider { position: relative; user-select: none; display: grid; align-items: start; touch-action: none; }
+  .slider > img, .slider > .after { grid-area: 1 / 1; }
+  .slider img { display: block; width: 100%; height: auto; }
+  .slider .after { clip-path: inset(0 0 0 50%); background: var(--card); }
+  .slider .after img { width: 100%; }
+  .handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; background: #f5a300; transform: translateX(-50%); pointer-events: none; }
+  .handle::after { content: "⟷"; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: #f5a300; color: #18181b; font-weight: 700; border-radius: 999px; padding: 4px 8px; font-size: 14px; }
+  .tag { position: absolute; top: 10px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: rgba(24,24,27,.85); color: #fff; }
+  .tag.l { left: 10px; } .tag.r { right: 10px; background: #f5a300; color: #18181b; }
+  input[type=range] { width: 100%; margin: 12px 0 0; accent-color: #f5a300; }
+  .side { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .side figure { margin: 0; } .side img { width: 100%; border: 1px solid var(--border); border-radius: 8px; }
+  .side figcaption { font-weight: 600; margin-bottom: 6px; }
+  iframe { width: 100%; height: 860px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+  .links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; font-size: 13px; }
+  .links a { color: inherit; }
+  [hidden] { display: none !important; }
+  @media (max-width: 800px) { .side { grid-template-columns: 1fr; } iframe { height: 640px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="titulo">Comparação v1 × v2</h1>
+  <p class="muted" id="sub">v1 = como está (dados fictícios) · v2 = proposta com os apontamentos</p>
+  <nav class="telas" id="telas" aria-label="Telas"></nav>
+  <nav class="modos" aria-label="Modo de comparação">
+    <button data-modo="deslizar" aria-pressed="true">Deslizar</button>
+    <button data-modo="lado">Lado a lado</button>
+    <button data-modo="prototipo">Protótipo v2 (clicável)</button>
+  </nav>
+</header>
+<main>
+  <section class="stage" id="deslizar">
+    <div class="slider" id="slider">
+      <img id="imgA" alt="Versão 1, como está">
+      <div class="after" id="after"><img id="imgB" alt="Versão 2, melhorada"></div>
+      <div class="handle" id="handle"></div>
+      <span class="tag l">v1 · como está</span><span class="tag r">v2 · melhorada</span>
+    </div>
+    <input type="range" id="range" min="0" max="100" value="50" aria-label="Posição da comparação">
+  </section>
+  <section class="stage side" id="lado" hidden>
+    <figure><figcaption>v1 · como está</figcaption><img id="imgA2" alt="Versão 1"></figure>
+    <figure><figcaption>v2 · melhorada</figcaption><img id="imgB2" alt="Versão 2"></figure>
+  </section>
+  <section class="stage" id="prototipo" hidden><iframe id="frame" title="Protótipo v2"></iframe></section>
+  <div class="links" id="links"></div>
+</main>
+<script>
+  const TELAS = {
+    'amplopay-app-dashboard': 'AmploPay › App › Dashboard',
+    'nalapay-app-dashboard': 'Nalapay › App › Dashboard do lojista',
+    'nalapay-backoffice-dashboard': 'Nalapay › Backoffice › Dashboard Admin',
+  };
+  const q = new URLSearchParams(location.search);
+  const tela = TELAS[q.get('tela')] ? q.get('tela') : Object.keys(TELAS)[0];
+  const base = `../mockups/${tela}/`;
+  document.title = `v1 × v2 · ${TELAS[tela]}`;
+  document.getElementById('titulo').textContent = `${TELAS[tela]}: v1 × v2`;
+  document.getElementById('telas').innerHTML = Object.entries(TELAS).map(([k, n]) => `<a href="?tela=${k}" aria-current="${k === tela}">${n}</a>`).join('');
+  ['imgA', 'imgA2'].forEach(id => { document.getElementById(id).src = base + 'v1/preview.png'; });
+  ['imgB', 'imgB2'].forEach(id => { document.getElementById(id).src = base + 'v2/preview.png'; });
+  document.getElementById('links').innerHTML = `
+    <a href="${base}v1/${tela}.svg">SVG v1 (Figma)</a><a href="${base}v2/${tela}.svg">SVG v2 (Figma)</a>
+    <a href="${base}v2/NOTAS.md">O que mudou na v2</a><a href="../docs/telas/${tela}.md">Análise completa</a>
+    <a href="../prototipos/${tela}/v2/index.html">Abrir protótipo em tela cheia</a>`;
+  const range = document.getElementById('range');
+  const mover = v => { document.getElementById('after').style.clipPath = `inset(0 0 0 ${v}%)`; document.getElementById('handle').style.left = v + '%'; };
+  range.addEventListener('input', e => mover(e.target.value));
+  const slider = document.getElementById('slider');
+  let arrastando = false;
+  const pos = e => { const r = slider.getBoundingClientRect(); const v = Math.min(100, Math.max(0, ((e.clientX - r.left) / r.width) * 100)); range.value = v; mover(v); };
+  slider.addEventListener('pointerdown', e => { arrastando = true; slider.setPointerCapture(e.pointerId); pos(e); });
+  slider.addEventListener('pointermove', e => arrastando && pos(e));
+  slider.addEventListener('pointerup', () => { arrastando = false; });
+  document.querySelectorAll('[data-modo]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-modo]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    ['deslizar', 'lado', 'prototipo'].forEach(m => { document.getElementById(m).hidden = m !== b.dataset.modo; });
+    if (b.dataset.modo === 'prototipo' && !document.getElementById('frame').src) document.getElementById('frame').src = `../prototipos/${tela}/v2/index.html`;
+  }));
+</script>
+</body>
+</html>
