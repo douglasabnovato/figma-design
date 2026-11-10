@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visão geral v2 — protótipo Nalapay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div class="logo"><svg width="20" height="14" viewBox="0 0 20 14"><path d="M0 0l10 12L20 0h-4l-6 7-6-7z" fill="currentColor"/></svg><span>Nalapay</span></div>
+    <p class="side-label">Gerenciamento</p>
+    <nav class="menu">
+      <a class="item active"><i data-i="grid"></i><span>Dashboard</span></a>
+      <button class="item" id="relatorios" aria-expanded="true"><i data-i="chart"></i><span>Relatórios</span><i data-i="chevR" class="chev"></i></button>
+      <div class="sub" id="subRel"><a data-nav="Entradas via Pix">Entradas via Pix</a><a data-nav="Saques">Saques</a><a data-nav="Todas as transações">Todas as transações</a></div>
+      <a class="item" data-nav="Disputas"><i data-i="file"></i><span>Disputas</span></a>
+      <a class="item" data-nav="Finanças"><i data-i="wallet"></i><span>Finanças</span></a>
+      <a class="item" data-nav="Checkout"><i data-i="cart"></i><span>Checkout</span><i data-i="chevR" class="chev"></i></a>
+      <a class="item" data-nav="Webhooks"><i data-i="hook"></i><span>Webhooks</span></a>
+      <a class="item" data-nav="Integrações"><i data-i="link"></i><span>Integrações</span></a>
+      <a class="item" data-nav="Taxas"><i data-i="pct"></i><span>Taxas</span></a>
+      <a class="item" data-nav="Indique e ganhe"><i data-i="gift"></i><span>Indique e ganhe</span></a>
+      <a class="item" data-nav="API"><i data-i="code"></i><span>API</span><i data-i="chevR" class="chev"></i></a>
+    </nav>
+    <div class="user"><span class="avatar">LE</span><div><strong>Loja Exemplo</strong><small>financeiro@lojaexemplo.com</small></div></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn" id="recolher" title="Recolher menu"><i data-i="panel"></i></button><span class="vsep"></span>
+      <span class="crumb">Visão geral</span>
+      <div class="top-right">
+        <button class="icon-btn" id="tema" title="Alternar tema"><i data-i="sun"></i></button>
+        <button class="goal" id="meta" title="Ver detalhes da meta">
+          <i data-i="trophy"></i>
+          <span class="goal-text"><span>Meta do mês</span><b id="metaTxt"></b></span>
+          <span class="goal-bar"><span id="metaBar"></span></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="head">
+        <div><h1>Visão geral</h1><p class="muted" id="subtitulo"></p></div>
+        <div class="actions">
+          <label class="select"><i data-i="cal"></i><select id="periodo"><option value="7">Últimos 7 dias</option><option value="30" selected>Últimos 30 dias</option><option value="90">Últimos 90 dias</option></select></label>
+          <button class="btn square" id="olho" title="Ocultar valores" aria-label="Ocultar valores"><i data-i="eye"></i></button>
+          <button class="btn" id="depositar"><i data-i="plus"></i>Depositar</button>
+          <button class="btn primary" id="sacar"><i data-i="arrowUp"></i>Sacar</button>
+        </div>
+      </div>
+
+      <section class="kpis" id="kpis"></section>
+
+      <section class="card methods">
+        <h3>Conversão por meio de pagamento</h3><p class="muted small">Aprovadas ÷ tentativas no período.</p>
+        <div class="methods-grid" id="meios"></div>
+      </section>
+
+      <div class="grid">
+        <section class="card chart-card">
+          <div class="card-head"><div><h3>Vendas aprovadas por dia</h3><p class="muted small">Valor em R$ · passe o mouse para ver o dia</p></div><span class="legend"><span class="dot"></span>Pix</span></div>
+          <div class="chart" id="chart"><svg id="chartSvg" role="img" aria-label="Gráfico de vendas aprovadas por dia"></svg><div class="tip" id="tip" hidden></div></div>
+        </section>
+        <section class="card tx-card">
+          <div class="card-head"><h3>Últimas transações</h3><a class="link" data-nav="Todas as transações">Ver todas →</a></div>
+          <div class="chips" id="filtros">
+            <button data-f="" aria-pressed="true">Todas</button><button data-f="Aprovada">Aprovadas</button><button data-f="Pendente">Pendentes</button><button data-f="Recusada">Recusadas</button>
+          </div>
+          <ul class="tx" id="tx"></ul>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" hidden></div>
+<aside class="drawer" id="drawer" aria-hidden="true"><div class="drawer-head"><h3>Detalhe da transação</h3><button class="icon-btn" data-close aria-label="Fechar"><i data-i="x"></i></button></div><div class="drawer-body" id="drawerBody"></div></aside>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+  <form class="modal-box" id="modalForm"><div class="modal-head"><h3 id="modalTitulo"></h3><button type="button" class="icon-btn" data-close aria-label="Fechar"><i data-i="x"></i></button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot" id="modalFoot"></div></form>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
+<div class="proto-tag">Protótipo v2 · dados fictícios</div>
+<script src="../../_comum/icones.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
