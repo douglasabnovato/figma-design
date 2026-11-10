@@ -13,6 +13,13 @@ prototipos/   protótipos navegáveis (HTML/React) das telas
 docs/         notas de design, decisões e links para os arquivos do Figma
 ```
 
+## Telas
+| Tela | Mockup (Figma) | Protótipo | Especificação |
+|---|---|---|---|
+| Finanças › Saques | [SVG](mockups/financas-saques/financas-saques.svg) · [prévia](mockups/financas-saques/preview.png) | [abrir](prototipos/financas-saques/index.html) | [spec](docs/telas/financas-saques.md) |
+
+O passo a passo completo está em [docs/FLUXO.md](docs/FLUXO.md).
+
 ## Conexão com o Figma
 A integração com o Figma é configurada localmente por quem mantém o repositório.
 Os links dos arquivos e frames de referência ficam em `docs/`.
