@@ -3,10 +3,12 @@
 - **Produto:** painel do lojista (`amplopay-app`)
 - **Rota de referência:** `/finances?lista=saques`
 - **Origem:** print de referência enviado em 10/11/2026. Os dados do print (nomes, e-mail, saldos e IDs) foram trocados por **dados fictícios**, porque este repositório é público.
-- **Arquivos:**
-  - Mockup para o Figma: [`mockups/financas-saques/financas-saques.svg`](../../mockups/financas-saques/financas-saques.svg)
-  - Prévia: [`mockups/financas-saques/preview.png`](../../mockups/financas-saques/preview.png)
-  - Protótipo clicável: [`prototipos/financas-saques/`](../../prototipos/financas-saques/)
+## Versões
+Nenhuma versão é apagada: cada ajuste vira uma pasta nova.
+
+| Versão | Data | Mockup (Figma) | Protótipo | Notas | Sugestões atendidas |
+|---|---|---|---|---|---|
+| v1 | 2026-11-10 | [SVG](../../mockups/financas-saques/v1/financas-saques.svg) · [prévia](../../mockups/financas-saques/v1/preview.png) | [abrir](../../prototipos/financas-saques/v1/index.html) | [NOTAS](../../mockups/financas-saques/v1/NOTAS.md) | — (versão inicial) |
 
 ## Objetivo
 Mostrar o saldo de cada moeda e o histórico de saques, transferências, conversões e ajustes, deixando claro quanto do saldo está **bloqueado** e não pode ser movimentado.
@@ -44,9 +46,7 @@ Mostrar o saldo de cada moeda e o histórico de saques, transferências, convers
 - **Outros controles:** recolher o menu lateral e o submenu Relatórios, alternar o tema e ocultar os valores.
 - **Itens de menu fora desta tela:** mostram um aviso.
 
-## Pontos para o revisor opinar
-- [ ] O alerta do topo e o aviso dentro do card dizem a mesma coisa. Vale manter os dois?
-- [ ] Com um card de cada moeda, MXN e COP zerados ocupam o mesmo espaço do BRL. Colapsar moedas sem saldo?
-- [ ] A coluna "Taxa" é quase sempre R$ 0,50. Ela pode virar só um tooltip no "Total debitado"?
-- [ ] A aba "Transferências internas" não tem contador, ao contrário das outras.
-- [ ] O que acontece com um saque **Recusado**: o valor volta para o saldo? O texto do detalhe assume que sim [A CONFIRMAR].
+## Sugestões
+As sugestões desta tela ficam em [sugestoes/financas-saques/](../../sugestoes/financas-saques/), uma por arquivo, e nunca são apagadas. O índice geral está em [sugestoes/README.md](../../sugestoes/README.md).
+
+- Abertas a partir da v1: S0001 a S0005.
