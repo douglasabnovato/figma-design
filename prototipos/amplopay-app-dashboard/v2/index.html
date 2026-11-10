@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard v2 — protótipo AmploPay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div class="logo"><svg width="20" height="16" viewBox="0 0 20 16"><path d="M1 16L10 0l9 16h-5l-4-7-4 7z" fill="currentColor"/></svg><b>AMPLO<span>PAY</span></b></div>
+    <p class="side-label">PRINCIPAL</p>
+    <nav class="menu" id="menu">
+      <a class="item active"><i data-i="home"></i>Dashboard</a>
+      <a class="item" data-nav="Vitrine"><i data-i="store"></i>Vitrine</a>
+      <div class="group"><button class="item" aria-expanded="false"><i data-i="bag"></i>Vendas<i data-i="chevR" class="chev"></i></button><div class="sub" hidden><a data-nav="Todas as vendas">Todas as vendas</a><a data-nav="Assinaturas">Assinaturas</a><a data-nav="Carrinhos abandonados">Carrinhos abandonados</a></div></div>
+      <div class="group"><button class="item" aria-expanded="false"><i data-i="wallet"></i>Financeiro<i data-i="chevR" class="chev"></i></button><div class="sub" hidden><a data-nav="Saques">Saques</a><a data-nav="Extrato">Extrato</a></div></div>
+      <div class="group"><button class="item" aria-expanded="false"><i data-i="file"></i>Relatórios<i data-i="chevR" class="chev"></i></button><div class="sub" hidden><a data-nav="Vendas por período">Vendas por período</a><a data-nav="Conversão">Conversão</a></div></div>
+      <div class="group"><button class="item" aria-expanded="false"><i data-i="users"></i>Clientes<i data-i="chevR" class="chev"></i></button><div class="sub" hidden><a data-nav="Lista de clientes">Lista de clientes</a></div></div>
+      <div class="group"><button class="item" aria-expanded="false"><i data-i="box"></i>Produtos<i data-i="chevR" class="chev"></i></button><div class="sub" hidden><a data-nav="Meus produtos">Meus produtos</a><a data-nav="Cupons">Cupons</a></div></div>
+      <div class="group"><button class="item" aria-expanded="false"><i data-i="gear"></i>Configurações<i data-i="chevR" class="chev"></i></button><div class="sub" hidden><a data-nav="Conta">Conta</a><a data-nav="Taxas">Taxas</a></div></div>
+      <a class="item" data-nav="Integrações"><i data-i="plug"></i>Integrações</a>
+      <a class="item" data-nav="Indique e ganhe"><i data-i="gift"></i>Indique e ganhe</a>
+    </nav>
+    <a class="logout" data-nav="Desconectar"><i data-i="logout"></i>Desconectar</a>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn" id="tema" title="Alternar tema"><i data-i="moon"></i></button>
+      <button class="user"><i data-i="user"></i>Loja Exemplo<i data-i="chevD"></i></button>
+    </header>
+
+    <main class="content">
+      <div class="head">
+        <div><h1>Dashboard</h1><p class="muted" id="subtitulo">Resumo das suas vendas nos últimos 7 dias.</p></div>
+        <label class="select"><i data-i="cal"></i><select id="periodo"><option value="7">Últimos 7 dias</option><option value="1">Hoje</option><option value="30">Últimos 30 dias</option><option value="90">Últimos 90 dias</option></select></label>
+      </div>
+
+      <!-- S0035: ativação -->
+      <section class="activation" id="ativacao" aria-labelledby="ativacaoTitulo">
+        <div class="act-top">
+          <span class="act-icon"><i data-i="rocket"></i></span>
+          <div class="act-text"><h2 id="ativacaoTitulo">Ative sua conta para começar a vender</h2><p class="muted" id="ativacaoTexto"></p></div>
+          <div class="act-cta"><button class="btn orange" id="continuar">Continuar ativação</button><a class="link" data-nav="Suporte">Falar com o suporte</a></div>
+        </div>
+        <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="4" id="barra"><div></div></div>
+        <ol class="steps" id="etapas"></ol>
+      </section>
+
+      <section class="kpis" id="kpis"></section>
+
+      <div class="grid">
+        <!-- S0037: estado vazio -->
+        <section class="card chart-card">
+          <h3>Resumo das transações</h3><p class="muted small">Valor aprovado por dia</p>
+          <div class="empty">
+            <span class="empty-icon"><i data-i="chart"></i></span>
+            <strong id="vazioTitulo">Nenhuma venda nos últimos 7 dias</strong>
+            <p class="muted" id="vazioTexto">Depois da ativação, crie um produto ou conecte o seu checkout. As vendas aparecem aqui em tempo real.</p>
+            <div class="row"><button class="btn primary" data-nav="Criar produto"><i data-i="plus"></i>Criar primeiro produto</button><button class="btn" data-nav="Conectar checkout"><i data-i="plug"></i>Conectar checkout</button></div>
+            <a class="link" id="guia">Ver guia de primeiros passos</a>
+          </div>
+        </section>
+
+        <div class="side">
+          <!-- S0041 -->
+          <section class="card">
+            <div class="card-head"><h3><i data-i="trophy" class="orange-i"></i>Jornada de conquistas</h3><a class="link" data-nav="Jornada de conquistas">Saiba mais</a></div>
+            <div class="kv"><span class="muted">Nível atual: Sem nível</span><b>Próximo: 10 mil em saques</b></div>
+            <div class="progress thin" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10000" aria-label="Progresso até o próximo nível"><div style="width:0.6%"></div></div>
+            <p class="muted small">R$ 0,00 de R$ 10.000,00 em saques</p>
+            <p class="small"><b>Faltam R$ 10.000,00 para o primeiro nível.</b></p>
+          </section>
+
+          <section class="card">
+            <h3>Métodos de pagamento</h3>
+            <ul class="methods" id="metodos"></ul>
+          </section>
+
+          <!-- S0036 -->
+          <section class="card refer" id="indique">
+            <span class="act-icon sm"><i data-i="gift"></i></span>
+            <div><h3>Indique e ganhe 1%</h3><p class="muted small">Receba 1% do volume vendido pelos produtores que você indicar.</p><a class="link" id="verLink">Ver meu link de indicação</a></div>
+            <button class="icon-btn close" id="fecharIndique" title="Dispensar" aria-label="Dispensar"><i data-i="x"></i></button>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+  <form class="modal-box" id="modalForm">
+    <div class="modal-head"><h3 id="modalTitulo"></h3><button type="button" class="icon-btn" data-close aria-label="Fechar"><i data-i="x"></i></button></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </form>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
+<div class="proto-tag">Protótipo v2 · dados fictícios</div>
+<script src="../../_comum/icones.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
