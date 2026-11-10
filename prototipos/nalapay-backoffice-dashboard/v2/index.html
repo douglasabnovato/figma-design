@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard Admin v2 — protótipo Nalapay Backoffice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div class="logo"><svg width="20" height="14" viewBox="0 0 20 14"><path d="M0 0l10 12L20 0h-4l-6 7-6-7z" fill="currentColor"/></svg><span>NalaPay</span></div>
+    <nav class="menu">
+      <p class="sec">PRINCIPAL</p><a class="item active"><i data-i="grid"></i><span>Dashboard</span></a>
+      <p class="sec">GESTÃO</p><a class="item" data-nav="Produtores"><i data-i="users"></i><span>Produtores<small class="pend">● 29 aguardando aprovação</small></span><i data-i="chevR" class="chev"></i></a>
+      <p class="sec">OPERAÇÃO</p><a class="item" data-nav="Financeiro"><i data-i="receipt"></i><span>Financeiro</span><i data-i="chevR" class="chev"></i></a>
+      <p class="sec">PLATAFORMA</p><a class="item" data-nav="Integrações"><i data-i="gear"></i><span>Integrações</span></a><a class="item" data-nav="Anúncios"><i data-i="mega"></i><span>Anúncios</span></a>
+      <p class="sec">ADMINISTRAÇÃO</p><a class="item" data-nav="Configurações"><i data-i="gear"></i><span>Configurações</span><i data-i="chevR" class="chev"></i></a>
+    </nav>
+    <div class="user"><span class="avatar">AE</span><div><strong>ADMIN EXEMPLO</strong><small>admin@exemplo.com</small></div><button class="icon-btn" data-nav="Sair" title="Sair"><i data-i="logout"></i></button></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar"><button class="icon-btn" id="recolher" title="Recolher menu"><i data-i="panel"></i></button><span class="vsep"></span><span class="crumb">Dashboard</span>
+      <button class="icon-btn tema" id="tema" title="Alternar tema"><i data-i="sun"></i></button></header>
+    <main class="content">
+      <div class="head">
+        <div><h1>Dashboard Admin</h1><p class="muted" id="subtitulo"></p></div>
+        <div class="actions">
+          <div class="seg" role="radiogroup" aria-label="Moeda" id="moeda"><button role="radio" data-m="BRL" aria-checked="true">BRL</button><button role="radio" data-m="MXN" aria-checked="false">MXN</button><button role="radio" data-m="COP" aria-checked="false">COP</button></div>
+          <label class="select"><i data-i="cal"></i><select id="periodo"><option value="7">Últimos 7 dias</option><option value="30" selected>Últimos 30 dias</option><option value="90">Últimos 90 dias</option></select></label>
+          <button class="btn square" id="olho" title="Ocultar valores" aria-label="Ocultar valores"><i data-i="eye"></i></button>
+          <button class="btn" data-nav="Exportar relatório">Exportar</button>
+        </div>
+      </div>
+
+      <div class="layout">
+        <div class="col-main">
+          <h2 class="sec-title">Volume</h2><div class="row3" id="volume"></div>
+          <h2 class="sec-title">Resultado</h2><div class="row3" id="resultado"></div>
+          <h2 class="sec-title">Risco</h2><div class="row2" id="risco"></div>
+          <section class="card chart-card">
+            <div class="card-head"><div><h3>Histórico diário</h3><p class="muted small" id="chartSub"></p></div>
+              <div class="chart-ctl"><span class="legend"><span class="dot"></span>Pix</span>
+              <label class="select sm"><select id="metrica"><option value="valor">Métrica: Volume aprovado</option><option value="vendas">Métrica: Vendas</option><option value="conv">Métrica: Conversão</option></select></label></div></div>
+            <div class="chart"><svg id="chartSvg" role="img" aria-label="Histórico diário"></svg><div class="tip" id="tip" hidden></div></div>
+          </section>
+        </div>
+
+        <div class="col-side">
+          <h2 class="sec-title">Saldos <span>posição atual · não depende do período</span></h2>
+          <section class="card saldos" id="saldos"></section>
+          <section class="card">
+            <h3><i data-i="trophy" class="amber"></i>Contas mais rentáveis</h3><p class="muted small">Lucro apurado no período = taxa cobrada − custo.</p>
+            <ol class="contas" id="contas"></ol>
+            <a class="link center" id="ranking">Ver ranking completo →</a>
+          </section>
+          <section class="card">
+            <h3><i data-i="mega"></i>Avisos aos lojistas</h3>
+            <ul class="avisos" id="avisos"></ul>
+            <a class="link" id="publicar">+ Publicar aviso</a>
+          </section>
+          <section class="card">
+            <h3><i data-i="info"></i>Glossário de métricas</h3>
+            <p class="muted small">Lucro apurado · Custo da adquirente · Conversão · Saldo retido · Chargeback · Ticket médio</p>
+            <a class="link" id="glossario">Abrir glossário →</a>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" hidden></div>
+<aside class="drawer" id="drawer" aria-hidden="true"><div class="drawer-head"><h3 id="drawerTitulo"></h3><button class="icon-btn" data-close aria-label="Fechar"><i data-i="x"></i></button></div><div class="drawer-body" id="drawerBody"></div></aside>
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+  <form class="modal-box" id="modalForm"><div class="modal-head"><h3 id="modalTitulo"></h3><button type="button" class="icon-btn" data-close aria-label="Fechar"><i data-i="x"></i></button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot" id="modalFoot"></div></form>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
+<div class="proto-tag">Protótipo v2 · dados fictícios</div>
+<script src="../../_comum/icones.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

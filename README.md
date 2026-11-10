@@ -11,7 +11,9 @@ Mockups e protótipos de frontend conectados ao Figma, para a equipe AmploPay re
 mockups/<tela>/v<N>/      telas estáticas (SVG para o Figma + prévia PNG), uma pasta por versão
 prototipos/<tela>/v<N>/   protótipos navegáveis (HTML/CSS/JS), uma pasta por versão
 sugestoes/                base de referências: uma sugestão por arquivo, nunca apagada
-docs/                     especificações das telas e o fluxo de trabalho
+comparacoes/v1-v2.html    antes × depois de cada tela (deslizar, lado a lado, protótipo)
+docs/                     especificações e análises das telas e o fluxo de trabalho
+ferramentas/              svgkit.js (gera os SVGs) e preview.ps1 (gera as prévias PNG)
 ```
 
 > **Nada é apagado.** Versões antigas e sugestões ficam guardadas para formar uma base de referências. Veja [docs/FLUXO.md](docs/FLUXO.md).
@@ -20,6 +22,11 @@ docs/                     especificações das telas e o fluxo de trabalho
 | Tela | Versão atual | Mockup (Figma) | Protótipo | Especificação | Sugestões |
 |---|---|---|---|---|---|
 | Finanças › Saques | v1 | [SVG](mockups/financas-saques/v1/financas-saques.svg) · [prévia](mockups/financas-saques/v1/preview.png) | [abrir](prototipos/financas-saques/v1/index.html) | [spec](docs/telas/financas-saques.md) | [S0001–S0005](sugestoes/README.md) |
+| AmploPay › App › Dashboard (conta nova) | v2 | [v1](mockups/amplopay-app-dashboard/v1/amplopay-app-dashboard.svg) · [v2](mockups/amplopay-app-dashboard/v2/amplopay-app-dashboard.svg) · [comparar](comparacoes/v1-v2.html?tela=amplopay-app-dashboard) | [v2](prototipos/amplopay-app-dashboard/v2/index.html) | [análise](docs/telas/amplopay-app-dashboard.md) | [S0035–S0041](sugestoes/README.md) |
+| Nalapay › App › Visão geral | v2 | [v1](mockups/nalapay-app-dashboard/v1/nalapay-app-dashboard.svg) · [v2](mockups/nalapay-app-dashboard/v2/nalapay-app-dashboard.svg) · [comparar](comparacoes/v1-v2.html?tela=nalapay-app-dashboard) | [v2](prototipos/nalapay-app-dashboard/v2/index.html) | [análise](docs/telas/nalapay-app-dashboard.md) | [S0020–S0026](sugestoes/README.md) |
+| Nalapay › Backoffice › Dashboard Admin | v2 | [v1](mockups/nalapay-backoffice-dashboard/v1/nalapay-backoffice-dashboard.svg) · [v2](mockups/nalapay-backoffice-dashboard/v2/nalapay-backoffice-dashboard.svg) · [comparar](comparacoes/v1-v2.html?tela=nalapay-backoffice-dashboard) | [v2](prototipos/nalapay-backoffice-dashboard/v2/index.html) | [análise](docs/telas/nalapay-backoffice-dashboard.md) | [S0012–S0019](sugestoes/README.md) |
+
+Nas telas com v1 e v2, a **v1 é a recriação do que está em produção** (com dados fictícios) e a **v2 é a proposta**. As sugestões atendidas estão em `mockups/<tela>/v2/NOTAS.md`.
 
 O passo a passo completo está em [docs/FLUXO.md](docs/FLUXO.md).
 

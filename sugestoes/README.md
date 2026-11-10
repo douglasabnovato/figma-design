@@ -77,4 +77,19 @@ Severidade de 1 (cosmético) a 4 (atrapalha o uso ou a confiança). H1 a H10 sã
 | [S0033](geral/S0033_glossario-metricas.md) | Todas as superfícies | Glossário de métricas dentro da interface | 2 | produção | aberta |
 | [S0034](geral/S0034_padrao-periodo-moeda.md) | Todas as superfícies | Padrão único de período e moeda | 2 | produção | aberta |
 
+**Correções de premissa:** [S0028-R1](amplopay-site/S0028-R1_premissa-corrigida.md) · [S0031-R1](geral/S0031-R1_premissa-corrigida.md). O painel AmploPay tem layout e identidade próprios, diferentes do app Nalapay.
+
+**Propostas nas versões v2 (aguardando aprovação):** S0012–S0019 → [backoffice Nalapay v2](../mockups/nalapay-backoffice-dashboard/v2/NOTAS.md) · S0020–S0026 → [app Nalapay v2](../mockups/nalapay-app-dashboard/v2/NOTAS.md) · S0014, S0017 e S0032–S0034 aplicadas nas duas.
+
+### Painel AmploPay, conta nova (2026-11-10)
+| ID | Tela | Título | Sev. | Versão | Situação |
+|---|---|---|---|---|---|
+| [S0035](amplopay-app-dashboard/S0035_ativacao-com-etapas.md) | AmploPay › App › Dashboard | Faixa "Produtor não está ativo." sem motivo nem saída | 4 | v1 | proposta na v2 |
+| [S0036](amplopay-app-dashboard/S0036_indique-e-ganhe-compacto.md) | AmploPay › App › Dashboard | Banner "Indique e ganhe" ocupa o topo de uma conta que nem foi ativada | 3 | v1 | proposta na v2 |
+| [S0037](amplopay-app-dashboard/S0037_estado-vazio-com-acao.md) | AmploPay › App › Dashboard | Indicadores e gráfico zerados sem orientação | 3 | v1 | proposta na v2 |
+| [S0038](amplopay-app-dashboard/S0038_formato-numerico-ptbr.md) | AmploPay › App › Dashboard | Percentuais com ponto ("0.00%") e moeda com vírgula | 2 | v1 | proposta na v2 |
+| [S0039](amplopay-app-dashboard/S0039_setas-da-sidebar.md) | AmploPay › App › Dashboard | Setas da sidebar apontam para a esquerda nos itens fechados | 2 | v1 | proposta na v2 |
+| [S0040](amplopay-app-dashboard/S0040_subtitulo-no-lugar-do-breadcrumb.md) | AmploPay › App › Dashboard | Breadcrumb "Principal / Dashboard" repete o título | 1 | v1 | proposta na v2 |
+| [S0041](amplopay-app-dashboard/S0041_jornada-com-progresso.md) | AmploPay › App › Dashboard | "Jornada de conquistas" sem barra de progresso | 1 | v1 | proposta na v2 |
+
 > O índice é a única parte que muda: só ganha linhas novas, e a coluna "Situação" é atualizada quando chega uma resposta. A fonte de verdade é sempre o arquivo da sugestão e o da resposta.
